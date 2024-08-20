@@ -3,7 +3,8 @@ import logging
 import sys
 
 from loguru import logger
-from handlers.greeting_handlers import register_greeting_handler
+
+from handlers.handlers import register_greeting_handler
 from system.dispatcher import dp, bot
 
 logger.add("logs/log.log", retention="1 days", enqueue=True)  # Логирование бота

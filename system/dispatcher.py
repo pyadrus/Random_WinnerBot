@@ -13,7 +13,7 @@ bot = Bot(
 storage = MemoryStorage()  # Хранилище
 dp = Dispatcher(storage=storage)
 
-ADMIN_USER_ID = 535185511, 301634256
+ADMIN_USER_ID = 535185511
 
 router = Router()
 dp.include_router(router)
