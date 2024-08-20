@@ -9,6 +9,7 @@ import random
 from system.dispatcher import bot, dp
 from telethon.tl.types import PeerUser, PeerChannel
 
+
 @dp.message(CommandStart())
 async def command_start_handler(message: Message) -> None:
     user_id = message.from_user.id
@@ -30,23 +31,34 @@ async def get_random_commenter(channel_id, message_id):
     async with TelegramClient(f'setting/account/{session_name}', api_id, api_hash) as client:
         await client.connect()
         logger.info(f'Подключено к аккаунту Telegram с именем сеанса {session_name}')
+
+        # Список для хранения ID и username пользователей
+        commenters = []
+
         async for message in client.iter_messages(channel_id, reply_to=message_id, reverse=True):
             sender_id = message.from_id.user_id if message.from_id else None
-            print(sender_id) # Получаем ID пользователя
+            username = message.sender.username if message.sender else None
+            print(sender_id, username)  # Получаем ID пользователя и имя пользователя
+            commenters.append((sender_id, username))
+
+        import random
+        random_commenter = random.choice(commenters)
 
         await client.disconnect()  # Отключение от аккаунта Telegram
+    return random_commenter
+
 
 @dp.message(Command('random_commenter'))
 async def random_commenter_handler(message: Message):
     channel_id = '@master_tg_d'  # ID вашего канала или группы
     post_id = 415  # ID поста, к которому нужно получить комментаторов
 
-    await get_random_commenter(channel_id, post_id)
+    random_commenter = await get_random_commenter(channel_id, post_id)
 
-    # if random_commenter:
-    #     await message.reply(f"Случайный комментатор: {random_commenter}")
-    # else:
-    #     await message.reply("Не удалось найти комментаторов.")
+    if random_commenter:
+        await message.reply(f"Случайный комментатор: {random_commenter}")
+    else:
+        await message.reply("Не удалось найти комментаторов.")
 
 
 def register_greeting_handler():
