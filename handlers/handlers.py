@@ -1,13 +1,10 @@
-from aiogram import types
 from aiogram.filters import Command
 from aiogram.filters import CommandStart
 from aiogram.types import Message
 from loguru import logger
 from telethon import TelegramClient
-from telethon.tl.functions.messages import GetDiscussionMessageRequest
-import random
+
 from system.dispatcher import bot, dp
-from telethon.tl.types import PeerUser, PeerChannel
 
 
 @dp.message(CommandStart())
@@ -38,7 +35,7 @@ async def get_random_commenter(channel_id, message_id):
         async for message in client.iter_messages(channel_id, reply_to=message_id, reverse=True):
             sender_id = message.from_id.user_id if message.from_id else None
             username = message.sender.username if message.sender else None
-            print(sender_id, username)  # Получаем ID пользователя и имя пользователя
+            logger.info(sender_id, username)  # Получаем ID пользователя и имя пользователя
             commenters.append((sender_id, username))
 
         import random
@@ -51,7 +48,7 @@ async def get_random_commenter(channel_id, message_id):
 @dp.message(Command('random_commenter'))
 async def random_commenter_handler(message: Message):
     channel_id = '@master_tg_d'  # ID вашего канала или группы
-    post_id = 415  # ID поста, к которому нужно получить комментаторов
+    post_id = 454  # ID поста, к которому нужно получить комментаторов
 
     random_commenter = await get_random_commenter(channel_id, post_id)
 

@@ -10,6 +10,7 @@ BOT_TOKEN = config["BOT_TOKEN"]["BOT_TOKEN"]
 bot = Bot(
     token=BOT_TOKEN,
 )
+
 storage = MemoryStorage()  # Хранилище
 dp = Dispatcher(storage=storage)
 
