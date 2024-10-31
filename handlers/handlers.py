@@ -35,7 +35,7 @@ async def get_random_commenter(channel_id, message_id):
         async for message in client.iter_messages(channel_id, reply_to=message_id, reverse=True):
             sender_id = message.from_id.user_id if message.from_id else None
             username = message.sender.username if message.sender else None
-            logger.info(sender_id, username)  # Получаем ID пользователя и имя пользователя
+            logger.info(f"Получен ID пользователя: {sender_id}, Имя пользователя: @{username}")  # Получаем ID пользователя и имя пользователя
             commenters.append((sender_id, username))
 
         import random
