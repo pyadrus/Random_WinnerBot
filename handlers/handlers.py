@@ -9,6 +9,7 @@ from system.dispatcher import bot, dp
 
 @dp.message(CommandStart())
 async def command_start_handler(message: Message) -> None:
+    """Обработчик команды /start"""
     user_id = message.from_user.id
     user_name = message.from_user.username
     user_first_name = message.from_user.first_name
@@ -21,6 +22,7 @@ async def command_start_handler(message: Message) -> None:
 
 # Функция для получения случайного комментатора поста
 async def get_random_commenter(channel_id, message_id):
+    """Функция для получения случайного комментатора поста"""
     api_id = 12345
     api_hash = '0123456789abcdef0123456789abcdef'
     session_name = 'session_name'
@@ -35,7 +37,8 @@ async def get_random_commenter(channel_id, message_id):
         async for message in client.iter_messages(channel_id, reply_to=message_id, reverse=True):
             sender_id = message.from_id.user_id if message.from_id else None
             username = message.sender.username if message.sender else None
-            logger.info(f"Получен ID пользователя: {sender_id}, Имя пользователя: @{username}")  # Получаем ID пользователя и имя пользователя
+            logger.info(
+                f"Получен ID пользователя: {sender_id}, Имя пользователя: @{username}")  # Получаем ID пользователя и имя пользователя
             commenters.append((sender_id, username))
 
         import random
@@ -47,8 +50,9 @@ async def get_random_commenter(channel_id, message_id):
 
 @dp.message(Command('random_commenter'))
 async def random_commenter_handler(message: Message):
+    """Обработчик команды /random_commenter"""
     channel_id = '@master_tg_d'  # ID вашего канала или группы
-    post_id = 454  # ID поста, к которому нужно получить комментаторов
+    post_id = 477  # ID поста, к которому нужно получить комментаторов
 
     random_commenter = await get_random_commenter(channel_id, post_id)
 
