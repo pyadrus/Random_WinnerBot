@@ -52,8 +52,7 @@ async def get_random_commenter(channel_id, message_id):
 async def random_commenter_handler(message: Message):
     """Обработчик команды /random_commenter"""
     channel_id = '@master_tg_d'  # ID вашего канала или группы
-    post_id = 477  # ID поста, к которому нужно получить комментаторов
-
+    post_id = 492  # ID поста, к которому нужно получить комментаторов
     random_commenter = await get_random_commenter(channel_id, post_id)
 
     if random_commenter:
